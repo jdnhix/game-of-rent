@@ -1,14 +1,14 @@
 import React from 'react';
 import '../styles/Map.css';
+import Nash from '../Nashville cropped board.jpeg'
 
-function App() {
+
+function Map() {
     return (
         <div className="Map">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-            </header>
+            <img src={Nash} className="Nashville-map" />
         </div>
     );
 }
 
-export default App;
+export default Map;

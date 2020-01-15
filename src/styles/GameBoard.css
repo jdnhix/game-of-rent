@@ -1,0 +1,8 @@
+.Board {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #4CACE9;
+    color: #4CACE9;
+}
