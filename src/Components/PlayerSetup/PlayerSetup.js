@@ -140,7 +140,7 @@ class ConnectedPlayerSetup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            playerName: 'temp',
+            playerName: '',
             avatarIndex: '',
             setupCount: 1,
 
