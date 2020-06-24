@@ -8,21 +8,7 @@ import {FILL_NEIGHBORHOODS} from '../actions/index';
 
 
 const initialState = {
-    players: [
-        {
-            playerName: 'Test',
-            avatar: 0,
-            family: [],
-            life: [],
-            numCards: 0
-        },
-//         {
-//             playerName: 'Test 2',
-//             avatar: 3,
-//             family: [],
-//             life: [],
-//         },
-    ],
+    players: [],
     playerCount: 0,
     city: 'NASHVILLE', //todo get rid of this defualt for prod
     jobs: [
