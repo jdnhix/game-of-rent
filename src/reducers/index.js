@@ -5,20 +5,7 @@ import {REMOVE_JOB} from '../actions/index';
 import {ADD_FAMILY} from '../actions/index';
 
 const initialState = {
-    players: [
-        {
-            playerName: 'Test',
-            avatar: 0,
-            family: [],
-            life: [],
-        },
-        {
-            playerName: 'Test 2',
-            avatar: 3,
-            family: [],
-            life: [],
-        },
-    ],
+    players: [],
     playerCount: 0,
     city: '',
     jobs: [
@@ -29,7 +16,6 @@ const initialState = {
         {title: 'Hotel Concierge', income: 2195},
         {title: 'Social Worker', income: 2835},
         {title: 'Lawyer', income: 10810},
-
         {title: 'Hotel Concierge', income: 2195},
     ],
     household: [

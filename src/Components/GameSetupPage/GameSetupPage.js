@@ -188,13 +188,13 @@ function GameSetupPage(){
                                             <em>None</em>
                                         </MenuItem>
                                         {/*<MenuItem value = "Athens"> Athens</MenuItem>*/}
-                                        <MenuItem value = "ATLANTA"> Atlanta</MenuItem>
+                                        {/*<MenuItem value = "ATLANTA"> Atlanta</MenuItem>*/}
                                         {/*<MenuItem value = "Austin"> Austin</MenuItem>*/}
-                                        <MenuItem value = "BILLINGS"> Billings</MenuItem>
+                                        {/*<MenuItem value = "BILLINGS"> Billings</MenuItem>*/}
                                         {/*<MenuItem value = "BIRMINGHAM"> Birmingham</MenuItem>*/}
                                         {/*<MenuItem value = "Boston"> Boston</MenuItem>*/}
                                         {/*<MenuItem value = "Chattanooga"> Chattanooga</MenuItem>*/}
-                                        <MenuItem value = "CHICAGO"> Chicago</MenuItem>
+                                        {/*<MenuItem value = "CHICAGO"> Chicago</MenuItem>*/}
                                         {/*<MenuItem value = "Clarksburg"> Clarksburg</MenuItem>*/}
                                         {/*<MenuItem value = "Columbus"> Columbus</MenuItem>*/}
                                         {/*<MenuItem value = "Durham-Chapel Hill"> Durham-Chapel Hill</MenuItem>*/}
