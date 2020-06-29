@@ -332,7 +332,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                 pathname: '/results'
             })
         } else {
-            let newTurn = playerTurn;
+            let newTurn = playerTurn + 1;
+            if(newTurn >= playerList.length) newTurn = 0;
             while(playerList[newTurn].housing){
                 newTurn++;
                 if(newTurn >= playerList.length) newTurn = 0;
