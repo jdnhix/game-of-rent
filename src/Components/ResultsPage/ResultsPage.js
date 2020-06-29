@@ -30,7 +30,7 @@ function ResultsPage(){
 
                     <div class="scores">
                         <p>Results page under construction</p>
-                        <p>Thank you for playing the Game of Rent!</p>
+                        <p>Thank you for testing the Game of Rent!</p>
                     </div>
                     <br/>
                     {/*<div class="winner">*/}

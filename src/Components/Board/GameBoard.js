@@ -146,11 +146,11 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     const InstructionText = [
         `Welcome to the Game of Rent! You will now take on the role of a person in ${city} searching for affordable housing. It is your job to find the best housing for you and your family considering all your circumstances. Let's find out more about your character; click on the yellow card to discover your occupation!`,
         "Now that you have your occupation, it's time to determine your household! Click on the die to roll for the number of family members you'll have.",
-        `That means you have ${diceRoll} other family member(s) in your household. Draw a household card and an occupation card if that family member is of working age.`,
+        `That means you have ${diceRoll} other family member(s) in your household. Click on the pink deck to draw a household card and draw an occupation card if that family member is of working age.`,
         `You have ${diceRoll} member(s) left. Please draw a household card for your next family member.`,
         'Please draw an occupation card for this family member.',
         'Your family is complete, but everyone has unforeseen circumstances arise in their lives. Draw a life card for each adult in your household including yourself!',
-        'You\'re the only member of your household! Everyone has unforeseen circumstances arise in their lives. Draw a life card for yourself.',
+        'You\'re the only member of your household! Everyone has unforeseen circumstances arise in their lives. Click on the green deck to draw a life card for yourself.',
         'Please draw another life card.',
         'Your household is finally set! Now click on the calculator icon to find out your monthly housing allowance. This is how much you can afford to spending on housing each month.',
         ''
@@ -169,7 +169,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
         if(instructionLocation === 1){
             setDiceRoll(num - 1);
             if(num === 1){
-                nextInstruction('solo')
+                // nextInstruction('solo') //todo uncomment this when i want to bring life cards back in
+                nextInstruction('done')
             } else {
                 nextInstruction()
             }
@@ -194,7 +195,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                     playerList[playerTurn].family[end].job = job;
 
                     if(diceRoll <= 0) {
-                        nextInstruction('familyDone')
+                        // nextInstruction('familyDone') //todo uncomment this when i want to bring life cards back in
+                        nextInstruction('done')
                     } else {
                         nextInstruction('family')
                     }
@@ -212,7 +214,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                     if(member.wage === 'draw'){
                         nextInstruction('working')
                     } else if(diceRoll <= 1) {
-                        nextInstruction('familyDone')
+                        // nextInstruction('familyDone') //todo uncomment this when i want to bring life cards back in
+                        nextInstruction('done')
                     } else {
                         nextInstruction('family')
                     }
@@ -225,7 +228,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
             case 'life':
                 if(instructionLocation === 5 || instructionLocation === 6 || instructionLocation === 7){
                     setLifeCount(lifeCount - 1);
-                    // todo also need ot increase draw count
+                    // todo also need to increase draw count
 
                     const index = Math.floor(Math.random() * lifeList.length)
                     const life = lifeList.splice(index, 1)[0];
