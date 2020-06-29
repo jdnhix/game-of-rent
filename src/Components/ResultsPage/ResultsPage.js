@@ -29,15 +29,13 @@ function ResultsPage(){
                 <div class="boxed">
 
                     <div class="scores">
-                        <p>John Doe's Score: 200 Points</p>
-                        <p>Player 2's Score: 150 Points</p>
-                        <p>Player 3's Score: 25 Points</p>
-                        <p>Player 4's Score: 200 Points</p>
+                        <p>Results page under construction</p>
+                        <p>Thank you for playing the Game of Rent!</p>
                     </div>
                     <br/>
-                    <div class="winner">
-                        <p>John Doe Wins!</p>
-                    </div>
+                    {/*<div class="winner">*/}
+                    {/*    <p>John Doe Wins!</p>*/}
+                    {/*</div>*/}
                 </div>
 
 

@@ -10,7 +10,7 @@ import {FILL_NEIGHBORHOODS} from '../actions/index';
 const initialState = {
     players: [],
     playerCount: 0,
-    city: 'NASHVILLE', //todo get rid of this defualt for prod
+    city: '',
     jobs: [
         {title: 'Social Worker', income: 2835},
         {title: 'Lawyer', income: 10810},
