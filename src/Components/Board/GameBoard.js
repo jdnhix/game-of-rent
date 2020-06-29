@@ -186,7 +186,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
         if(instructionStep === 1){
             setDiceRoll(num - 1);
             if(num === 1){
-                nextInstruction('solo')
+                // nextInstruction('solo') //todo uncomment this when i want to bring life cards back in
+                nextInstruction('done')
             } else {
                 nextInstruction()
             }
@@ -211,7 +212,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                     playerList[playerTurn].family[end].job = job;
 
                     if(diceRoll <= 0) {
-                        nextInstruction('familyDone')
+                        // nextInstruction('familyDone') //todo uncomment this when i want to bring life cards back in
+                        nextInstruction('done')
                     } else {
                         nextInstruction('family')
                     }
@@ -229,7 +231,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                     if(member.wage === 'draw'){
                         nextInstruction('working')
                     } else if(diceRoll <= 1) {
-                        nextInstruction('familyDone')
+                        // nextInstruction('familyDone') //todo uncomment this when i want to bring life cards back in
+                        nextInstruction('done')
                     } else {
                         nextInstruction('family')
                     }
@@ -242,6 +245,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
             case 'life':
                 if(instructionStep === 5 || instructionStep === 6 || instructionStep === 7){
                     setLifeCount(lifeCount - 1);
+
 
                     const index = Math.floor(Math.random() * lifeList.length)
                     const life = lifeList.splice(index, 1)[0];
