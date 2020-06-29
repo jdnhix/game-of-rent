@@ -69,16 +69,16 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     });
 
     console.log(data);
-    if(!loading){
-        if(data.city){
-            // for(let job in data.city.jobs){
-            //     job.income = Number(job.income.replace(/[^0-9.-]+/g,""));
-            // }
-            // todo add in a way to change the income string to a int
-            // dispatch(fillJobs({jobs: data.city.jobs}));
-            // dispatch(fillNeighborhoods({neighborhoods: data.city.housing})); todo uncomment this when fix neighborhoods
-        }
-    }
+    // if(!loading){
+    //     if(data.city){
+    //         // for(let job in data.city.jobs){
+    //         //     job.income = Number(job.income.replace(/[^0-9.-]+/g,""));
+    //         // }
+    //         // todo add in a way to change the income string to a int
+    //         // dispatch(fillJobs({jobs: data.city.jobs}));
+    //         // dispatch(fillNeighborhoods({neighborhoods: data.city.housing})); todo uncomment this when fix neighborhoods
+    //     }
+    // }
 
 
     // LOCAL STATE
