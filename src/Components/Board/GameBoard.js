@@ -91,6 +91,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
         variables: { name: city }
     });
 
+
     if(!loading){
         if(data.city){
             dispatch(fillJobs({jobs: data.city.jobs}));
@@ -99,8 +100,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     }
     console.log(data)
 
-
     const makePricesIntoString = l => " " + (l.map(a => "$" + a).join(" + ") || "$0") //todo this might be useful
+
 
     // LOCAL STATE
     const [playerTurn, setPlayerTurn] = React.useState(0); // player 1's turn is presented by a 0
