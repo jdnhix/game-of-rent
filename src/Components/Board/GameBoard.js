@@ -92,6 +92,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     });
 
 
+
     if(!loading){
         if(data.city){
             dispatch(fillJobs({jobs: data.city.jobs}));
@@ -102,6 +103,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
 
 
     const makePricesIntoString = l => " " + (l.map(a => "$" + a).join(" + ") || "$0") //todo this might be useful
+
 
 
     // LOCAL STATE
@@ -249,7 +251,6 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
             case 'life':
                 if(instructionStep === 5 || instructionStep === 6 || instructionStep === 7){
                     setLifeCount(lifeCount - 1);
-
 
                     const index = Math.floor(Math.random() * lifeList.length)
                     const life = lifeList.splice(index, 1)[0];
