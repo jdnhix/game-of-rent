@@ -96,7 +96,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
             dispatch(fillNeighborhoods({neighborhoods: data.city.neighborhoods}));
         }
     }
-    // console.log(data)
+    console.log(data)
 
     const makePricesIntoString = l => " " + (l.map(a => "$" + a).join(" + ") || "$0") //todo this might be useful
 
@@ -526,7 +526,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                 transitionAppearTimeout={2500}>
                 <div className='calculator-panel' onClick={closeMathBox}>
                     <MathBox info={playerList[playerTurn].info}/>
-
+                {/*  todo here i'm thinking about rendering a totally different component with dif text for those that meet the housing assistance  */}
                 </div>
             </ReactCSSTransitionGroup>
             }
@@ -536,33 +536,35 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                 transitionAppear={true}
                 transitionAppearTimeout={2500}>
             {/*todo need to eventually move this styling out of here*/}
-            <div id="overlay" style={{height:"100%", width:"100%", backgroundColor:"rgba(0,0,0, 0.7)", zIndex:2, position:"fixed", display:"none"}}>
-                {(!showPlayerPopup && (instructionStep !== 9)) &&
-                    <p onClick={xFunction} style={{position:"fixed",left:"80%",color:"white",fontWeight:"bold",cursor:"pointer",fontSize:40}}>X</p>
-                }
-                <FlippingCard ref={flippingCardRef} startSize={[0, 0]} startXY={[0, 0]} />
+                <div id="overlay" style={{height:"100%", width:"100%", backgroundColor:"rgba(0,0,0, 0.7)", zIndex:2, position:"fixed", display:"none"}}>
 
-                {(instructionStep === 9 && showNeighborhoodChoice) &&
-                    <div className='choice'>
-                        {/*// todo maybe add player name here*/}
-                        <h2>This location meets the requirements for your family and is within your monthly housing allowance. Would you like to live here?</h2>
-                        <div className='choice-section'>
-                            <Button variant='contained' className='choice-button' onClick={() =>{xFunction(); handleNeighborhoodChoice('yes')}}>Yes</Button>
-                            <Button variant='contained' className='choice-button' onClick={() => {xFunction(); handleNeighborhoodChoice('no')}}>No</Button>
+                    {(!showPlayerPopup && (instructionStep !== 9)) &&
+                        <p onClick={xFunction} style={{position:"fixed",left:"80%",color:"white",fontWeight:"bold",cursor:"pointer",fontSize:40}}>X</p>
+                    }
+
+                    <FlippingCard ref={flippingCardRef} startSize={[0, 0]} startXY={[0, 0]} />
+
+                    {(instructionStep === 9 && showNeighborhoodChoice) &&
+                        <div className='choice'>
+                            {/*// todo maybe add player name here*/}
+                            <h2>This location meets the requirements for your family and is within your monthly housing allowance. Would you like to live here?</h2>
+                            <div className='choice-section'>
+                                <Button variant='contained' className='choice-button' onClick={() =>{xFunction(); handleNeighborhoodChoice('yes')}}>Yes</Button>
+                                <Button variant='contained' className='choice-button' onClick={() => {xFunction(); handleNeighborhoodChoice('no')}}>No</Button>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
 
-                {(instructionStep === 9 && !showNeighborhoodChoice) &&
-                    <div className='choice'>
-                        <h2 style={{color:'white', textAlign: 'center'}}>This location does not meet the requirements for your family.</h2>
-                        <div className='choice-section'>
-                            <Button variant='contained' className='choice-button' onClick={() => {xFunction(); handleNeighborhoodChoice('no')}}>Ok</Button>
+                    {(instructionStep === 9 && !showNeighborhoodChoice) &&
+                        <div className='choice'>
+                            <h2 style={{color:'white', textAlign: 'center'}}>This location does not meet the requirements for your family.</h2>
+                            <div className='choice-section'>
+                                <Button variant='contained' className='choice-button' onClick={() => {xFunction(); handleNeighborhoodChoice('no')}}>Ok</Button>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
 
-            </div>
+                </div>
             </ReactCSSTransitionGroup>
 
             <div className='playercard-section'>

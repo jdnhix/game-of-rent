@@ -1,8 +1,5 @@
 import React from 'react';
-
-import HouseholdCardBack from '../Card/img/GameOfRent_HouseholdBack.jpg';
 import CustomCard from '../Card/CustomCard.js';
-import PlayerPopup from '../PlayerCard/PlayerPopup.js';
 
 class FlippingCard extends React.Component {
   constructor(props) {
@@ -13,7 +10,6 @@ class FlippingCard extends React.Component {
   startWithNewProps(props) {
     this.setState(this.getStartStateFor(props));
   }
-
 
   startForRightCard(card, cardProps) {
     const rect = card.getBoundingClientRect();
@@ -51,7 +47,7 @@ class FlippingCard extends React.Component {
   stepRecursively(goingToCenterVal, doneEvent) {
     //if (this.state.goingToCenter != goingToCenterVal) return;
     this.step();
-    if (this.state.progress == (goingToCenterVal ? 1 : 0)) {
+    if (this.state.progress === (goingToCenterVal ? 1 : 0)) {
       doneEvent();
       return;
     }
@@ -114,7 +110,7 @@ class FlippingCard extends React.Component {
     const fullSize = this.getFullSize();
     return (
       <div style={{position: "absolute", left: xy[0]+"px", top: xy[1]+"px", transform: "scale("+this.getWidthScale()+",1) "}}>
-        <img src={this.state.backImg} style={{width:fullSize[0]+"px", display: this.getShowBackOrFront() ? "" : "none"}} />
+        <img src={this.state.backImg} style={{borderRadius: '10px', width:fullSize[0]+"px", display: this.getShowBackOrFront() ? "" : "none"}} />
         <div style={{top: 0, display: (!this.getShowBackOrFront() && !this.state.isPlayerCard) ? "" : "none"}}><CustomCard cardProps={this.state.cardProps} /></div>
       </div>
     );
