@@ -100,6 +100,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     }
     console.log(data)
 
+
     const makePricesIntoString = l => " " + (l.map(a => "$" + a).join(" + ") || "$0") //todo this might be useful
 
 
