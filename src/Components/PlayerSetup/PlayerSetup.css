@@ -31,7 +31,6 @@ label {
     align-items: center;
     backdrop-filter: blur(20px);
     background-color: rgba(0, 0, 0, 0.667);
-    font-family: Roboto, sans-serif;
 }
 
 .playerName{

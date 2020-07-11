@@ -1,6 +1,12 @@
+@font-face {
+  font-family: 'futura-book-bold';
+  src: url('futura-book-bold.woff') format('woff'),
+       url('futura-book-bold.ttf')  format('truetype');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: 'futura-book-bold', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
