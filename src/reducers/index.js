@@ -4,7 +4,7 @@ import {UPDATE_PLAYER} from '../actions/index';
 import {REMOVE_JOB} from '../actions/index';
 import {ADD_FAMILY} from '../actions/index';
 import {FILL_JOBS} from '../actions/index';
-import {FILL_NEIGHBORHOODS} from '../actions/index';
+import {FILL_NEIGHBORHOODS, FILL_CITIES} from '../actions/index';
 
 
 const initialState = {
@@ -15,16 +15,11 @@ const initialState = {
             family: [],
             life: [],
             numCards: 0
-        },
-//         {
-//             playerName: 'Test 2',
-//             avatar: 3,
-//             family: [],
-//             life: [],
-//         },
+        }
     ],
     playerCount: 0,
-    city: 'NASHVILLE', //todo get rid of this defualt for prod
+    city: 'NASHVILLE',
+    cities: [],
     jobs: [
         {title: 'Social Worker', income: 2835},
         {title: 'Lawyer', income: 10810},
@@ -102,8 +97,6 @@ const initialState = {
         {title: 'Physical Disability', description: 'Less than 4% of housing units in America are suitable for people with mobility challenges. After drawing a neighborhood card, roll the dice. If the number is odd, the unit is not accessible and you are not able to rent it'}, //3
         {title: 'Child Support', description: 'Fall behind on child support and have your wages garnished - subtract $200 from your monthly income'} // 3
     ]
-
-
 }
 
 function rootReducer(state = initialState, action) {
@@ -112,38 +105,35 @@ function rootReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 players: state.players.concat(action.payload)
             });
-            break;
         case UPDATE_CITY_AND_PLAYER_COUNT:
             return Object.assign({}, state, {
                 playerCount: (action.payload.playerCount),
                 city: (action.payload.city)
             });
-            break;
         case UPDATE_PLAYER: //todo evalute if i need these anymore
             return Object.assign({}, state, {
                 players: state.players.map((player, index) => index === action.payload.playerId ? {...player, job: action.payload.job} : player)
             });
-            break;
          case REMOVE_JOB:
             return Object.assign({}, state, {
                 jobs: state.jobs.filter(job => job.title != action.payload.title)
             });
-            break;
          case ADD_FAMILY:
             return Object.assign({}, state, {
                 players: state.players.map((player, index) => index === action.payload.playerId ? {...player, family: player.family.concat(action.payload.member)} : player)
             });
-            break;
         case FILL_JOBS:
             return Object.assign({}, state, {
                 jobs: (action.payload.jobs)
             });
-            break;
         case FILL_NEIGHBORHOODS:
             return Object.assign({}, state, {
                 neighborhoods: (action.payload.neighborhoods)
             });
-            break;
+        case FILL_CITIES:
+            return Object.assign({}, state, {
+                cities: (action.payload.cities.map(city => city.Nickname))
+            });
     }
     return state;
 };

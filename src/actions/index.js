@@ -5,6 +5,7 @@ export const REMOVE_JOB = 'REMOVE_CARD';
 export const ADD_FAMILY = 'ADD_FAMILY'
 export const FILL_JOBS = 'FILL_JOBS'
 export const FILL_NEIGHBORHOODS = 'FILL_NEIGHBORHOODS'
+export const FILL_CITIES = 'FILL_CITIES';
 
 export function addPlayer(payload){
     return { type: ADD_PLAYER, payload }
@@ -33,4 +34,8 @@ export function fillJobs(payload){
 
 export function fillNeighborhoods(payload){
     return{ type: FILL_NEIGHBORHOODS, payload }
+}
+
+export function fillingCities(payload) {
+    return { type: FILL_CITIES, payload}
 }

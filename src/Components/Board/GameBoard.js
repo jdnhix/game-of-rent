@@ -86,16 +86,24 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     const dispatch = useDispatch(); //todo delete
     const history = useHistory();
 
+    console.log('*********************************')
     //DATABASE
     const { loading, error, data } = useQuery(GET_CITY, {
         variables: { name: city }
     });
-    if(!loading){
-        if(data.city){
-            dispatch(fillJobs({jobs: data.city.jobs}));
-            dispatch(fillNeighborhoods({neighborhoods: data.city.neighborhoods}));
+    console.log(loading, error, data)
+    console.log('*********************************')
+    
+    useEffect(() => {
+        console.log(error)
+        if(!loading){
+            if(data.city){
+                dispatch(fillJobs({jobs: data.city.jobs}));
+                dispatch(fillNeighborhoods({neighborhoods: data.city.neighborhoods}));
+            }
         }
-    }
+    }, [loading]);
+
     // console.log(data)
 
     const makePricesIntoString = l => " " + (l.map(a => "$" + a).join(" + ") || "$0") //todo this might be useful
