@@ -18,7 +18,6 @@ const app = new RealmWeb.App({
 
 const authorizationHeaderLink = setContext(async (_, { headers }) => {
   if (app.currentUser) {
-    console.log('    await app.currentUser.refreshCustomData()', app.currentUser)
     // Refreshing custom data also refreshes the access token
     // await app.currentUser.refreshCustomData();
   } else {

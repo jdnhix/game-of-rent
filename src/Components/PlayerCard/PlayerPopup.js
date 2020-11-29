@@ -14,7 +14,7 @@ function PlayerPopup(props) {
             </div>
 
             <div className='player-popup-text'>
-                <h2>{props.player.playerName}</h2>
+                <h2>{props.player.name}</h2>
                 {props.player.info &&
                     <div>
                         <p>Total Housing Monthly Income: ${props.player.info.householdMonthlyIncome}</p>

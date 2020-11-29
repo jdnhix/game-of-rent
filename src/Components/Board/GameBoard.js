@@ -81,18 +81,15 @@ const buttonStyle = {
     height: '1vh',
 }
 
-function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList, neighborhoodList}) {
+function ConnectedGameBoard({player, city, jobList, householdList, lifeList, neighborhoodList}) {
     // HOOKS
     const dispatch = useDispatch(); //todo delete
     const history = useHistory();
 
-    console.log('*********************************')
     //DATABASE
     const { loading, error, data } = useQuery(GET_CITY, {
         variables: { name: city }
     });
-    console.log(loading, error, data)
-    console.log('*********************************')
     
     useEffect(() => {
         console.log(error)
@@ -181,7 +178,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     ];
     const GameLoopInstructionText = [
         'Draw a Neighborhood card to look for a location that suits you and your family!',
-        'All players have successfully found housing! Please click here to proceed to the result page and calculate scores.'
+        'You have successfully found housing! Please click here to proceed to the result page and calculate scores.'
         //todo add more types of text
     ]
 
@@ -209,14 +206,14 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                     const job = jobList.splice(index, 1)[0];
                     showCardFullscreen(flippingCardRef.current, "occupationCardBack",   ["Occupation", job]);
                     nextInstruction();
-                    playerList[playerTurn].job = job;
+                    player.job = job;
 
                 } else if( instructionStep === 4) {
 
                     const job = jobList.splice(index, 1)[0];
                     showCardFullscreen(flippingCardRef.current, "occupationCardBack",   ["Occupation", job]);
-                    const end = playerList[playerTurn].family.length - 1;
-                    playerList[playerTurn].family[end].job = job;
+                    const end = player.family.length - 1;
+                    player.family[end].job = job;
 
                     if(diceRoll <= 0) {
                         nextInstruction('familyDone')
@@ -243,7 +240,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                     }
 
                     if(member.adult) setLifeCount(lifeCount + 1);
-                    playerList[playerTurn].family.push(member);
+                    player.family.push(member);
                 }
 
                 break;
@@ -255,7 +252,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                     const life = lifeList.splice(index, 1)[0];
                     showCardFullscreen(flippingCardRef.current, "lifeCardBack",   ["Life", life]);
 
-                    playerList[playerTurn].life.push(life);
+                    player.life.push(life);
 
                     if(lifeCount === 1){
                         nextInstruction('done')
@@ -268,7 +265,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
             case 'neighborhood':
                 if(instructionStep === 9){
                     setShowNeighborhoodChoice(false);
-                    playerList[playerTurn].numCards++; // todo also need ot increase draw count
+                    player.numCards++; // todo also need ot increase draw count
 
                     let index = Math.floor(Math.random() * neighborhoodList.length)
                     const neighborhood = neighborhoodList.splice(index, 1)[0];
@@ -292,10 +289,10 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
     const handleNeighborhoodChoice = (response) => {
         switch(response) {
             case 'no':
-                nextPlayerGame()
+                // nextPlayerGame()
                 break;
             case 'yes':
-                playerList[playerTurn].housing = housing;
+                player.housing = housing;
 
                 console.log(housing);
 
@@ -323,69 +320,28 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
 
                 const location ={
                     position: [movingLat, movingLong],
-                    description: `${playerList[playerTurn].playerName}'s residence`
+                    description: `${player.name}'s residence`
                 }
 
                 addMarker(location)
-                nextPlayerGame();
+                setGameInstructionStep(1);
                 break;
         }
     }
-    const nextPlayerSetup = () => {
-        if(playerTurn === playerList.length - 1){
-            setPlayerTurn(0);
-            setInstructionStep(9)
-            setShowGameBox(true);
-        } else {
-            setInstructionStep(0)
-            setShowInstBox(true);
-            setPlayerTurn(playerTurn + 1);
-            setDiceRoll(null);
-            setLifeCount(1);
-        }
-    }
-    const nextPlayerGame = () => {
-        if(playerTurn === playerList.length - 1){
-            setPlayerTurn(0);
-            console.log('looping over!');
-        } else {
-            setPlayerTurn(playerTurn + 1);
-        }
-
-        let done = true;
-        for(let x = 0; x < playerList.length; ++x) {
-            if(!playerList[x].housing) done = false;
-        }
-
-        if(done) {
-            setGameInstructionStep(gameInstructionStep + 1);
-            // history.push({
-            //     pathname: '/results'
-            // })
-        } else {
-            let newTurn = playerTurn + 1;
-            if(newTurn >= playerList.length) newTurn = 0;
-            while(playerList[newTurn].housing){
-                newTurn++;
-                if(newTurn >= playerList.length) newTurn = 0;
-            }
-            setPlayerTurn(newTurn);
-        }
-
-    }
     const addMarker = (location) => {
-        const newMarkers = markers
-        newMarkers.push(location)
-        setMarkers(newMarkers);
+        // const newMarkers = markers
+        // newMarkers.push(location)
+        // console.log(newMarkers)
+        setMarkers([location]);
         // [36.1627, -86.7816]
     }
 
     const calcInfo = () =>{
-        let householdMonthlyIncome = playerList[playerTurn].job.income;
+        let householdMonthlyIncome = player.job.income;
         let adultCount = 1
         let kidCount = 0;
 
-        playerList[playerTurn].family.forEach((member) => {
+        player.family.forEach((member) => {
             if(member.adult){
                 adultCount++;
             } else {
@@ -401,10 +357,10 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
         //todo add life cards into effect
 
         const annualIncome = householdMonthlyIncome * 12;
-        const incomeBracket = playerList[playerTurn].family.length
+        const incomeBracket = player.family.length
         let minimumNumBedrooms = Math.ceil(adultCount/2) + Math.ceil(kidCount/3)
 
-        playerList[playerTurn].info = {
+        player.info = {
             householdMonthlyIncome: householdMonthlyIncome,
             monthlyHousingAllowance: householdMonthlyIncome * .3,
             minimumNumBedrooms: minimumNumBedrooms,
@@ -412,8 +368,8 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
         }
     }
     const livable = (neighborhood) => {
-        const minNumBed = playerList[playerTurn].info.minimumNumBedrooms;
-        const {monthlyHousingAllowance} = playerList[playerTurn].info
+        const minNumBed = player.info.minimumNumBedrooms;
+        const {monthlyHousingAllowance} = player.info
         let res = false;
 
         for(let [key, value] of Object.entries(neighborhood)){
@@ -444,12 +400,14 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
 
     const closeMathBox = () => {
         setShowMathBox(false);
-        nextPlayerSetup();
+        // nextPlayerSetup();
+        setInstructionStep(9)
+        setShowGameBox(true);
     }
-    const togglePlayerPopup = (playerIndex) => {
+    const togglePlayerPopup = () => {
         if(!showPlayerPopup){
             document.getElementById("overlay").style.display = "block";
-            setPlayerPopupLocation(playerIndex);
+            setPlayerPopupLocation();
             setShowPlayerPopup(true);
             setShowNeighborhoodChoice(false); //todo this might not be correct
         } else {
@@ -471,7 +429,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                         transitionAppear={true}
                         transitionAppearTimeout={5000}>
                         <div className='instruction-section'>
-                            <h3>{playerList[playerTurn].playerName}</h3>
+                            <h3>{player.name}</h3>
                             <div>
                                 <p>{InstructionText[instructionStep]}</p>
                             </div>
@@ -487,7 +445,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                         transitionAppear={true}
                         transitionAppearTimeout={5000}>
                         <div className='gamebox-background'>
-                            <h3>{playerList[playerTurn].playerName}</h3>
+                            <h3>{player.name}</h3>
                             <p>{GameLoopInstructionText[gameInstructionStep]}</p>
                             {(gameInstructionStep === 1) &&
                                 <Link to='/results'>
@@ -508,7 +466,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                 // transitionLeave={true}
                 transitionLeaveTimeout={30000}>
                 <div className='player-popup'>
-                    <PlayerPopup player={playerList[playerPopupLocation]} onClick={() => togglePlayerPopup()}/>
+                    <PlayerPopup player={player} onClick={() => togglePlayerPopup()}/>
                 </div>
             </ReactCSSTransitionGroup>
             }
@@ -524,7 +482,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
             </div>
 
             <div className='calculator-section' onClick={handleCalculatorButton}>
-                <img class='calculator-image' src={Calculator}></img>
+                <img className='calculator-image' src={Calculator}></img>
             </div>
 
             {showMathBox &&
@@ -533,7 +491,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
                 transitionAppear={true}
                 transitionAppearTimeout={2500}>
                 <div className='calculator-panel' onClick={closeMathBox}>
-                    <MathBox info={playerList[playerTurn].info}/>
+                    <MathBox info={player.info}/>
 
                 </div>
             </ReactCSSTransitionGroup>
@@ -574,12 +532,10 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
             </ReactCSSTransitionGroup>
 
             <div className='playercard-section'>
-                    {playerList.map((player, index) => (
-                        <div className={(playerTurn === index) ? 'current-player' : '' }>
-                            <PlayerCard btnId="info1" playerName={player.playerName} avatar={player.avatar} onClick={() => togglePlayerPopup(index)}/>
-                        </div>
-                    ))}
+                <div className={'current-player'}>
+                    <PlayerCard btnId="info1" playerName={player.name} avatar={player.avatar} onClick={() => togglePlayerPopup()}/>
                 </div>
+            </div>
 
             <div className='map'>
                 <Map markers={markers} lat={data && data.city &&  data.city.lat} long={data && data.city && data.city.long}/>
@@ -597,7 +553,7 @@ function ConnectedGameBoard({playerList, city, jobList, householdList, lifeList,
 
 const mapStateToProps= state => {
     return {
-        playerList: state.players,
+        player: state.player,
         city: state.city,
         jobList: state.jobs,
         householdList: state.household,
