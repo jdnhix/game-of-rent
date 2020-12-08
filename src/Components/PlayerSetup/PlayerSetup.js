@@ -5,14 +5,12 @@ import './PlayerSetup.css';
 import TextField from '@material-ui/core/TextField';
 import PlayerIcon from '../PlayerIcon/PlayerIcon';
 import { connect } from 'react-redux';
-import { addPlayer } from '../../actions/index';
+import { updatePlayerAvatar } from '../../actions/index';
 import {
     withStyles, ThemeProvider,
  } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
-import store from '../../store/index';
 import {createMuiTheme } from '@material-ui/core/styles';
-import {Link} from 'react-router-dom'; //todo might get rid of this
 
 
 
@@ -140,10 +138,7 @@ class ConnectedPlayerSetup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            playerName: 'temp',
             avatarIndex: '',
-            setupCount: 1,
-
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -155,22 +150,15 @@ class ConnectedPlayerSetup extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.addPlayer({ playerName: this.state.playerName, avatar: this.state.avatarIndex, family: [], life: [], numCards: 0});
+        this.props.updatePlayerAvatar(this.state.avatarIndex);
         document.getElementById(`option${this.state.avatarIndex}`).checked = 0;
-        this.setState({ playerName: '', avatarIndex: ''});
-
-        if(this.state.setupCount >= this.props.playerCount){
-            this.props.history.push('/board')
-        } else {
-            this.setState({setupCount: this.state.setupCount + 1})
-        }
+        this.props.history.push('/board')
     }
 
 
 
     render() {
         const { classes } = this.props;
-        const { playerName } = this.state;
         const { avatarIndex } = this.state;
 
         let button;
@@ -184,6 +172,13 @@ class ConnectedPlayerSetup extends React.Component {
             </Button>
         }
 
+        const indices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        const avatars = indices.map(index => (
+            <>
+                <input className='avatar-radio-buttons' id={`option${index}`} onChange={this.handleChange} type='radio' value={index} name='avatarIndex'/>
+                <label className='avatar-image' htmlFor={`option${index}`}><PlayerIcon width='5vw' num={index}/></label>
+            </>
+        ));
 
         return (
             <div className='backgroundImage'>
@@ -192,76 +187,14 @@ class ConnectedPlayerSetup extends React.Component {
                     <div className = "fade-in" style={styles.playerSetup}>
 
                         <div style={styles.textGrid}>
-                            <h1>Player {this.state.setupCount}</h1>
+                            <h1>AVATAR</h1>
                             <form onSubmit={this.handleSubmit}>
                                 <div style={styles.fields}>
-
-                                    <label htmlFor="playerName">Enter a name for your player</label>
-                                    <CssTextField
-
-                                        required
-                                        id="playerName"
-                                        name='playerName'
-                                        label="Player Name"
-                                        variant="outlined"
-                                        className = "inputLabel"
-                                        onChange={this.handleChange}
-                                        value={playerName}
-                                        style={styles.textBox}
-                                        classes={{
-                                            root: styles.root
-                                        }}
-                                        InputLabelProps={{
-                                            classes: {
-                                                root: styles.cssLabel,
-                                            },
-                                        }}
-                                        InputProps={{
-                                            //makes input white
-                                            style:{
-                                                color: 'white'
-                                            },
-                                            classes: {
-                                                root: styles.cssOutlinedInput,
-                                                notchedOutline: styles.notchedOutline,
-                                            },
-                                            inputMode: "numeric"
-                                        }}
-                                    />
-
 
                                     <div style={styles.avatarSection}>
                                         <h2>Choose an avatar for your player</h2>
                                         <div style={styles.avatarIcons}>
-
-                                                <input className='avatar-radio-buttons' id='option0' onChange={this.handleChange} type='radio' value={0} name='avatarIndex' required/>
-                                                <label className='avatar-image' htmlFor='option0'><PlayerIcon width='5vw' num={0}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option1' onChange={this.handleChange} type='radio' value={1} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option1'><PlayerIcon width='5vw' num={1}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option2' onChange={this.handleChange} type='radio' value={2} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option2'><PlayerIcon width='5vw' num={2}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option3' onChange={this.handleChange} type='radio' value={3} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option3'><PlayerIcon  width='5vw'  num={3}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option4' onChange={this.handleChange} type='radio' value={4} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option4'><PlayerIcon  width='5vw'  num={4}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option5' onChange={this.handleChange} type='radio' value={5} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option5'><PlayerIcon  width='5vw' num={5}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option6' onChange={this.handleChange} type='radio' value={6} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option6'><PlayerIcon  width='5vw' num={6}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option7' onChange={this.handleChange} type='radio' value={7} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option7'><PlayerIcon  width='5vw' num={7}/></label>
-
-                                                <input className='avatar-radio-buttons' id='option8' onChange={this.handleChange} type='radio' value={8} name='avatarIndex'/>
-                                                <label className='avatar-image' htmlFor='option8'><PlayerIcon  width='5vw' num={8}/></label>
-
-
+                                            {avatars}
                                         </div>
                                     </div>
 
@@ -290,7 +223,7 @@ class ConnectedPlayerSetup extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        addPlayer: player => dispatch(addPlayer(player))
+        updatePlayerAvatar: avatarIndex => dispatch(updatePlayerAvatar({avatarIndex}))
     };
 }
 

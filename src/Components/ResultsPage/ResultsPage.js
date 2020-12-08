@@ -1,6 +1,10 @@
 import React from 'react';
 import './ResultsPage.css';
-
+import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom'
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import PlayerPopup from '../PlayerCard/PlayerPopup';
 
 const headerStyle = {
     height: '100vh',
@@ -12,8 +16,14 @@ const headerStyle = {
     justifyContent: 'center',
   };
 
+  const buttonStyle = {
+    color: '#ffffff',
+    fontWeight: 700,
+    border: '2px solid #ffffff',
+    margin: 20,
+  }
 //todo add fade in
-function ResultsPage(){
+function ConnectedResultsPage({player}){
     return (
         <div className='backgroundImage '>
             <div className = 'resultsPage'>
@@ -25,25 +35,14 @@ function ResultsPage(){
                     </p>
                 </header>
 
-
-                <div class="boxed">
-
-                    <div class="scores">
-                        <p>John Doe's Score: 200 Points</p>
-                        <p>Player 2's Score: 150 Points</p>
-                        <p>Player 3's Score: 25 Points</p>
-                        <p>Player 4's Score: 200 Points</p>
+                <div className="boxed">
+                    <div className='result-player-popup'>
+                        <PlayerPopup player={player}/>
                     </div>
-                    <br/>
-                    <div class="winner">
-                        <p>John Doe Wins!</p>
-                    </div>
+                    <Link to='/welcome'>
+                        <Button variant='outlined' style={buttonStyle}>REPLAY</Button>
+                    </Link>
                 </div>
-
-
-
-
-
 
             </header>
 
@@ -56,4 +55,15 @@ function ResultsPage(){
 }
 
 
-export default ResultsPage;
+
+const mapStateToProps= state => {
+    return {
+        player: state.player
+    }
+}
+
+const ResultsPage = connect(
+    mapStateToProps
+)(ConnectedResultsPage);
+
+export default withRouter(ResultsPage);

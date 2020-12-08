@@ -19,7 +19,7 @@ const app = new RealmWeb.App({
 const authorizationHeaderLink = setContext(async (_, { headers }) => {
   if (app.currentUser) {
     // Refreshing custom data also refreshes the access token
-    await app.currentUser.refreshCustomData();
+    // await app.currentUser.refreshCustomData();
   } else {
     // If no user is logged in, log in an anonymous user
     await app.logIn(RealmWeb.Credentials.anonymous());
