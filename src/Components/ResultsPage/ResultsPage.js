@@ -35,7 +35,7 @@ function ConnectedResultsPage({player}){
                     </p>
                 </header>
 
-                <div className="boxed">
+                <div className="result-card">
                     <div className='result-player-popup'>
                         <PlayerPopup player={player}/>
                     </div>
